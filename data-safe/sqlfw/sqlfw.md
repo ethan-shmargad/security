@@ -2,7 +2,9 @@
 
 ## Introduction
 
-In this lab, you create and enforce a SQL Firewall policy for the `APP_USER` database user. You begin by using Data Safe and Database Actions to create a collection of allowed SQL statements for `APP_USER`. This collection is referred to as the *allow-list*. Next, you test that `APP_USER` cannot run any other statement on the target database.  Lastly, you add a SQL statement from the violation log to the allow-list.
+In this lab, you create and enforce a SQL Firewall policy for the `APP_USER` database user. **Oracle SQL Firewall** is a robust security feature built into Oracle AI Database 26ai, designed to provide real-time protection against common database attacks by restricting access to only authorized SQL statements or connections.
+
+You begin by using Data Safe and Database Actions to create a collection of allowed SQL statements for `APP_USER`. This collection is referred to as the *allow-list*. Next, you test that `APP_USER` cannot run any other statement on the target database.  Lastly, you add a SQL statement from the violation log to the allow-list.
 
 Estimated Lab Time: 20 minutes
 
@@ -24,7 +26,7 @@ This lab assumes you have:
 
 - Obtained an Oracle Cloud account and signed in to the Oracle Cloud Infrastructure Console at `https://cloud.oracle.com`
 - Prepared your environment
-- A target database that is Oracle Database 23ai
+- A target database that is Oracle AI Database 26ai
 
 ## Task 1 (For your tenancy only): Grant the SQL Firewall role on your target database
 
@@ -62,9 +64,9 @@ Perform this task only if you are working in your own tenancy. If you are using 
 
 3. Under **List Scope** on the left, select your compartment.
 
-4. On the **Target summary** tab, click the name of your target database. It should currently show as **Disabled**.
+4. On the **Target summary** tab, click the name of your target database. The SQL Firewall status should currently show as **Disabled**.
 
-5. Click **Refresh**. 
+5. On the SQL Firewall page, click the **Refresh** button.
 
 6. Click **Enable** and wait until the status changes to **ACTIVE**.
 
@@ -85,21 +87,21 @@ Perform this task only if you are working in your own tenancy. If you are using 
 
    ![Create and start SQL collection dialog box](images/create-start-sql-collection.png "Create and start SQL Collection dialog box")
 
-5. Wait for status to change to **COLLECTING**.
+5. Wait for the status to change to **COLLECTING**.
 
     SQL Firewall is now set to capture SQL statements issued by the `APP_USER` database user.
 
-6. From the navigation menu, select **Oracle Database**, and then **Autonomous Database**.
+6. From the navigation menu, select **Oracle AI Database**, and then **Autonomous AI Database**.
 
 7. Click the name of your database.
 
-8. On the **Autonomous Database details** page, from the **Database actions** menu, select **Database Users**.
+8. On the **Autonomous AI Database** page, from the **Database actions** menu, select **Database Users**.
 
 9. On the **APP_USER** tile, click the three dots, and select **Edit**.
 
 10. In the **Password** and **Confirm Password** boxes, enter a database password for `APP_USER`.
 
-    Note: Password must be 12 to 30 characters and contain at least one uppercase letter, one lowercase letter, and one number. The password cannot contain the double quote (") character or the username "admin".
+    Note: The password must be 12 to 30 characters and contain at least one uppercase letter, one lowercase letter, and one number. It cannot contain the double quote (") character or the username "admin".
 
 11. At the bottom, enable **Web Access**.
 
@@ -138,9 +140,9 @@ Perform this task only if you are working in your own tenancy. If you are using 
     </copy>
     ```
 
-20. Return to the **Autonomous Database | Oracle Cloud Infrastructure** tab.
+20. Return to the **Autonomous AI Database | Oracle Cloud Infrastructure** tab.
 
-21. From the navigation menu, select **Oracle Database**, and then **SQL Firewall** under **Data Safe - Database Security**.
+21. From the navigation menu, select **Oracle AI Database**, and then **SQL Firewall** under **Data Safe - Database Security**.
 
 22. Click the name of your target database.
 
@@ -233,25 +235,31 @@ When you run the SQL statements in this task, use the **Run Statement** button i
     
 1. Return to the **SQL Firewall | Oracle Cloud Infrastructure** tab. You may need to wait a couple of minutes for the violations to show up.
 
-2. Under **Unique allowed SQL statements**, click **Add from violations**.
+2. On the **SQL Firewall policy information** tab, click the **View report** link next to **Violation reports**. Review the two violations.
 
-    The **Add from violations** page is displayed showing you Autonomous Database SQL queries.
+    ![Violations Log](images/violations-log.png "Violations Log")
 
-    ![Add from violations page](images/two-violations.png "Add from violations page")
+3. In the breadcrumb at the top of the page, click **Firewall policy details**.
 
-3. Expand the violations and review.
+4. Under **Unique allowed SQL statements**, click **Add from violations**.
 
-4. Select the check box for the second SQL violation: `SELECT * FROM HCM1.EMPLOYEES`.
+    The **Add from violations** page is displayed showing you Autonomous AI Database SQL queries.
 
-5. Click **Add violations**. 
+5. Expand the violations and review.
+
+6. Select the check box for the SQL violation: `SELECT * FROM HCM1.EMPLOYEES`. You need to click **Show** to identify it.
+
+    ![Add from violations page](images/violations.png "Add from violations page")
+
+7. Click **Add violations**. 
 
     You are returned to the **Firewall policy details** page.
 
-6. Under **Unique allowed SQL statements**, notice that your selected SQL statement is now listed at the top.
+8. Under **Unique allowed SQL statements**, notice that your selected SQL statement is now listed at the top.
 
     ![Add from violations page](images/new-allowed-sql-statement.png "Add from violations page")
 
-7. Return to **Database Actions** as `APP_USER` and run the newly-allowed SQL statement to test that it will run successfully.
+9. Return to **Database Actions** as `APP_USER` and run the newly-allowed SQL statement to test that it will run successfully.
 
     ```text
     <copy>SELECT * FROM HCM1.EMPLOYEES;
@@ -264,6 +272,6 @@ Congratulations! You finished the Get Started with Oracle Data Safe Fundamentals
 ## Acknowledgements
 
 - **Author** - Jody Glover, Consulting User Assistance Developer, Database Development
-- **Last Updated By/Date** - Jody Glover, May 5, 2025
+- **Last Updated By/Date** - Jody Glover, October 20, 2025
 
 
